@@ -1,14 +1,14 @@
-# Time Table
+Time Table
 
 Now you can define **Continuous Integration** and **Continuous Delivery** (CI/CD) process as code with **Jenkins 2.0** for your projects in **iOS 10**. Activities like **build**, **test**, **code coverage**, **check style**, **reports** and **notifications** can be described in only one file.
 
 ### What is the idea?
 
-One of the DevOps goals it to build process of CI/CD with the characteristics that can be written ones and run always.
+One of the DevOps goals is to build processes of CI/CD with the characteristics that can be written once and run always.
 
 When you write your process you avoid the human error and can track all changes over the time. You can learn from your errors and improve your next steps.
 
-Jenkins support this philosophy of work when including the `Jenkinsfile` file along with <a target="_blank" href="https://jenkins.io/doc/book/pipeline/">Pipeline modules</a>. The `Jenkinsfile` file is used to describe all step needed in your workflow. The site <a target="_blank" href="https://jenkins.io/solutions/pipeline/">Jenkins.io</a> have a lot of information related to this topic but now, we are going to become dirty our hands with a real example.
+Jenkins support this philosophy of work when including the `Jenkinsfile` file along with <a target="_blank" href="https://jenkins.io/doc/book/pipeline/">Pipeline modules</a>. The `Jenkinsfile` file is used to describe all steps needed in your workflow. The site <a target="_blank" href="https://jenkins.io/solutions/pipeline/">Jenkins.io</a> has a lot of information related to this topic but now, we are going to get our hands dirty with a real example.
 
 ### Time Table: An example project
 
@@ -32,12 +32,12 @@ The environment configuration used for this article is the following:
           XCode: 8.1
 
 ### Project iOS 10.1 ###
-       Lengueje: Swift 3
+       Language: Swift 3
 ```
 
 ## Setting Up Jenkinsfile
 
-The following lines will show what do you need to include in your iOS 10 project to setting up the pipeline. First of all, create a new file with the name `Jenkinsfile` in the project root and after adding the code behind to `Jenkinsfile` archive. It is simple, right?
+The following lines will show what you need to include in your iOS 10 project to set up the pipeline. First of all, create a new file with the name `Jenkinsfile` in the project root and after adding the code behind to `Jenkinsfile` archive. It is simple, right?
 
 ```
 node('iOS Node') {
@@ -130,7 +130,7 @@ stage('Analytics') {
 }
 ```
 
-Jenkins group tasks in `stages`. This tasks can be run as the sequential or parallel process depends on the case. The `Jenkinsfile` file show both examples.
+Jenkins groups tasks in `stages`. These tasks can be run sequential or parallel processes depending upon the case. The `Jenkinsfile` file show both examples.
 
 ### Checkout source code
 
@@ -148,7 +148,7 @@ checkout([
 ])
 ```
 
-The Pipeline SCM Step Plugin get the source code from GitHub.
+The Pipeline SCM Step Plugin gets the source code from GitHub.
 
 ### Build and test
 
@@ -157,9 +157,9 @@ The Pipeline SCM Step Plugin get the source code from GitHub.
 sh 'xcodebuild -scheme "TimeTable" -configuration "Debug" build test -destination "platform=iOS Simulator,name=iPhone 6,OS=10.1" -enableCodeCoverage YES | /usr/local/bin/xcpretty -r junit'
 ```
 
-The project is compiled using `xcodebuild` tool. Parameters like `scheme`, `configuration` and `destination` must be setting up depending of the project information.
+The project is compiled using `xcodebuild` tool. Parameters like `scheme`, `configuration` and `destination` must be setup depending upon the project information.
 
-During the tests execution `xcpretty` transform the tests result into a standard JUnit file to be consulted. The file is generated in the following location: `build/reports/junit.xml`.
+During the tests execution `xcpretty` transforms the tests result into a standard JUnit file to be reviewed. The file is generated in the following location: `build/reports/junit.xml`.
 
 You must have installed <a target="_blank" href="https://github.com/supermarin/xcpretty">Xcpretty</a> to work with tests.
 
@@ -170,7 +170,7 @@ You must have installed <a target="_blank" href="https://github.com/supermarin/x
 step([$class: 'JUnitResultArchiver', allowEmptyResults: true, testResults: 'build/reports/junit.xml'])
 ```
 
-The <a target="_blank" href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin">Plugin JUnit</a> show the tests result in a tables.
+The <a target="_blank" href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin">Plugin JUnit</a> shows the test results in a table.
 
 You must have installed <a target="_blank" href="https://wiki.jenkins-ci.org/display/JENKINS/JUnit+Plugin">Plugin JUnit</a> to publish tests reports.
 
@@ -181,7 +181,7 @@ You must have installed <a target="_blank" href="https://wiki.jenkins-ci.org/dis
 sh '/usr/local/bin/slather coverage --jenkins --html --scheme TimeTable TimeTable.xcodeproj/'
 ```
 
-<a target="_blank" href="https://github.com/SlatherOrg/slather">Slather</a> generate the code coverage report. Slater can be configured to show the report in `html` format and saved in the following location: `./html/index.html`.
+<a target="_blank" href="https://github.com/SlatherOrg/slather">Slather</a> generates the code coverage report. Slater can be configured to show the report in `html` format and saved in the following location: `./html/index.html`.
 
 You must have installed <a target="_blank" href="https://github.com/SlatherOrg/slather">Slather</a> to generate code coverage reports.
 
@@ -242,15 +242,15 @@ The Pipeline configuration must be the same like the following image:
 ```
       Definition: Pipeline script from SCM
              SCM: Git
-    Repositories: https://github.com/mmorejon/time-table.git
+    Repositories: https://github.com/genekestler/time-table.git
 Branch Specifier: */master
      Script Path: Jenkinsfile
 ```
 
 ## Build Job
 
-Run `time-table` job twice and see the results.
+Run the `time-table` job twice and see the results.
 
 ## Conclusion
 
-Now you know how to write your own **CI/CD** process using **Pipeline Modules** in **Jenkins 2.0**. It's your turn to build the  `Jenkinsfile`  that needs your team.
+Now you know how to write your own **CI/CD** process using **Pipeline Modules** in **Jenkins 2.0**. It's your turn to build the  `Jenkinsfile`  that your teams need.
