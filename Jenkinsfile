@@ -1,3 +1,5 @@
+// info here: http://mmorejon.github.io/en/blog/build-pipeline-jenkins2-as-code-with-ios10-xcode8/
+
 node('iOS Node') {
 
     stage('Checkout/Build/Test') {
